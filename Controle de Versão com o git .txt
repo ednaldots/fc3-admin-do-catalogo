@@ -1,0 +1,7 @@
+1 git init
+2 git add .
+3 git commit -m "Mensagem Explicativo"
+4 git branch -M main
+5 git remote add origin git@github.com:https://github.com/ednaldots/fc3-admin-do-catalogo.git
+6 git -u origin main
+7 git push https://github.com/ednaldots/fc3-admin-do-catalogo.git
