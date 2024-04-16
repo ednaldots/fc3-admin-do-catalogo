@@ -1,11 +1,12 @@
 package com.fullcycle.admin.catalogo.domain.category;
 
+import com.fullcycle.admin.catalogo.domain.AggregateRoot;
+
 import java.time.Instant;
 import java.time.Instant;
 import java.util.UUID;
 
-public class Category {
-    public String id;
+public class Category extends AggregateRoot <CategoryID>  {
     private final String name;
     private final String description;
     private final boolean active;
@@ -13,29 +14,34 @@ public class Category {
     private final Instant updatedAt;
     private static Instant deletedAt;
 
-    public
-    Category ( final String id , final String name , final String description , final boolean active , final Instant createdAt , final Instant updatedAt
-
+    private Category(
+            final CategoryID anId,
+            final String aName,
+            final String aDescription,
+            final boolean isActive,
+            final Instant aCreationDate,
+            final Instant aUpdateDate,
+            final Instant aDeleteDate
     ) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
 
-    }
+     super(anId);
+        this.name = aName;
+        this.description = aDescription;
+        this.active = isActive;
+        this.createdAt = aCreationDate;
+        this.updatedAt = aUpdateDate;
+
+}
 
     public static Category newCategory(final String aName, final String aDescription, final Boolean isActive ) {
-       final var id = UUID.randomUUID().toString();
+       final var id = CategoryID.unique ();
        final var now = Instant.now ();
-        return new Category(id, aName, aDescription, isActive, now, now);
+        return new Category(id, aName, aDescription, isActive, now, now, deletedAt);
     }
 
-    public
-    String getId () {
-        return id;
-    }
+//    public String CategoryId getId() {
+//        return id;
+//    }
 
     public
     String getName () {
