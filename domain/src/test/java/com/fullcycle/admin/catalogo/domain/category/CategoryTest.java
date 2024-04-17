@@ -1,6 +1,11 @@
 package com.fullcycle.admin.catalogo.domain.category;
 
+import com.fullcycle.admin.catalogo.domain.validation.handler.ThrowsValidationHandler;
 
+import com.fullcycle.admin.catalogo.domain.validation.ValidationHandler;
+
+import com.fullcycle.admin.catalogo.domain.validation.handler.ThrowsValidationHandler;
+import com.fullcycle.admin.catalogo.domain.exception.DomainException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +34,7 @@ public class CategoryTest  {
     public void givenAAnInvalidNullName_whenCallNewCategoryAnValidate_thenShouldReceiveError() {
         final String expectedName = null;
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'name' should not be null'";
+        final var expectedErrorMessage = "'name' should not be null";
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = true;
 
@@ -37,9 +42,16 @@ public class CategoryTest  {
                 Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
         final var actualException =
-                Assertions.assertThrows(DomainException.class, () -> actualCategory.validate();
+                Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(new ThrowsValidationHandler(){
+                    @Override
+                    public ValidationHandler append ( Error anHandler ) {
+                        return null;
+                    }
+                } ));
 
-        Assertions.assertEquals(expectedErrorCount, actualException.getErrors(0))
-        Assertions.assertEquals(expectedErrorMessage .getErrors(0))
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors ().size () );
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).getMessage());
     }
+
+
 }
