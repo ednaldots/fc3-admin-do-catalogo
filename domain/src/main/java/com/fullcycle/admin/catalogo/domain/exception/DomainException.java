@@ -6,11 +6,15 @@ public class DomainException extends RuntimeException {
     private final List<Error> errors;
 
     private DomainException (final List<Error>anErrors) {
-        super("", null, true, false);
+        super("");
         this.errors = anErrors;
     }
 
-    public static DomainException with(final java.util.List<Error> anErrors) {
+    public static DomainException with(final Error anErrors) {
+        return new DomainException(List.of(anErrors));
+    }
+
+    public static DomainException with(final com.fullcycle.admin.catalogo.domain.validation.Error anErrors) {
         return new DomainException(anErrors);
     }
 

@@ -10,7 +10,7 @@ public interface ValidationHandler {
 
     ValidationHandler validate ( Validation aValidation );
 
-    java.util.List<java.lang.Error> getErrors();
+    com.fullcycle.admin.catalogo.domain.validation.Error getErrors();
     default boolean hasError() {
         return getErrors() != null && !getErrors().isEmpty();
     }
